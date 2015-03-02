@@ -1,0 +1,43 @@
+<head>
+  <title>tic-tac-toe</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+  {{>game}}
+
+</body>
+
+<template name="game">
+  <div class="overlay">
+    <div class="pre-game">
+      <form class="username-form">
+        <label>What's your username gonna be? </label>
+        <input id="username" type="text">
+      </form>
+      <button class="start-game-button js-new-player">Ready to play!</button>
+    </div>
+  </div>
+
+  {{>board}}
+</template>
+
+<template name="board">
+  <button class="reset js-reset">Reset Board</button>
+  <div class="board">
+    {{#each squares}}
+      {{>square}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="square">
+  <div id="{{id}}" class="square js-square">
+    <p class="xo">{{value}}</p>
+  </div>
+</template>
+
+<template name="pregame">
+
+</template>
