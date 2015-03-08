@@ -1,10 +1,10 @@
-console.log("start client");
 
   Session.set('xo', 'X');
   Session.set('game_id', null);
-  var gameData;
 
   Meteor.subscribe('gameData', Session.get('player_id'), Session.get('game_id'));
+  // var gameData = new Meteor.Collection('gameData');
+
 
   var helpers = {
       toggleXO: function(){
@@ -43,6 +43,7 @@ console.log("start client");
           else {
             Meteor.call('createGame', Session.get('player_id'), function(err, data){
               Session.set('game_id', data);
+              debugger;
             });
 
           }

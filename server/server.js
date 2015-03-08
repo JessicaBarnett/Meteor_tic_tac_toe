@@ -1,7 +1,7 @@
 var AllGamesData = new Mongo.Collection("AllGamesData");
 
 Meteor.startup(function() {
-  // debugger;
+  AllGamesData.remove({}); //clears db every time server restarts
   console.log("start server");
 });
 
@@ -15,8 +15,7 @@ Meteor.publish('gameData', function(player_id, game_id) {
 
 
 
-/*
-  finished data structure for player
+/*finished data structure for player
   player: {
     type: player
     id: playerID
@@ -37,8 +36,6 @@ Meteor.publish('gameData', function(player_id, game_id) {
     winner: playerID (no property if drawn)
     turns: {type: turn, game: gameID}
   }
-
-
 */
 
 
@@ -56,13 +53,13 @@ Meteor.methods({
   },
 
   addPlayer: function(username){
+    // debugger;
     var player_id = AllGamesData.insert({
       type: 'player',
       username: username
     });
 
     console.log('added player:  ', player_id);
-    debugger;
     return player_id;
   },
 
@@ -74,9 +71,10 @@ Meteor.methods({
     });
 
     //create new squares to represent the game board
-    Meteor.call('createBoard', newGame_id);
+    Meteor.call('createBoard', game_id);
 
     //returns game Id
+    debugger;
     return game_id;
   },
 
@@ -84,18 +82,18 @@ Meteor.methods({
   joinGame: function(player2_id){
     // debugger;
     //check if a 1-player game exists in the database
-    var pendingGame_cursor = AllGamesData.find({type: 'game', status: 'pending'});
+    var pendingGame = AllGamesData.findOne({type: 'game', status: 'pending'});
 
     //if so, then add the passed player to that game
-    if (pendingGame_cursor.count() > 0) {
-      AllGamesData.update(pendingGame_cursor, {status: 'in-progress', player2: player2_id });
+    if (pendingGame.count() > 0) {
+      AllGamesData.update(pendingGame, {status: 'in-progress', player2: player2_id });
       console.log('game joined');
+      return pendingGame; //return the game's id (?)
     }
     else {
       console.log('no pending games.');
+      return null;
     }
-
-    return pendingGame_cursor; //return the game's id
   }
 
 });
