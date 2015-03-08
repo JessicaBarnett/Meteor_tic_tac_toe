@@ -8,8 +8,6 @@ client subscribes to game + game._id
 client pings subscribed data for the addition of player2?
 
 
-*/
-
 
 
 
