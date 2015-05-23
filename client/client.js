@@ -2,9 +2,14 @@
   Session.set('xo', 'X');
   Session.set('game_id', null);
 
-  Meteor.subscribe('gameData', Session.get('player_id'), Session.get('game_id'));
-  // var gameData = new Meteor.Collection('gameData');
+  var gameData = new Mongo.Collection("gameData");
+  // Meteor.subscribe('gameData', Session.get('player_id'), Session.get('game_id'));
 
+  // var gamedata = [];
+  //
+  // Deps.autorun(function(c) {
+  //   gameData = Meteor.subscribe('cursorPub', Session.get('filter'));
+  // });
 
   var helpers = {
       toggleXO: function(){
